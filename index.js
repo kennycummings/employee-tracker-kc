@@ -1,10 +1,9 @@
 const inquirer = require('inquirer');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 // Create a MySQL connection
 const connection = mysql.createConnection({
     host: 'localhost',
-    port: 3001,
     user: 'root',
     password: 'rootroot',
     database: 'employeetracker_db'
@@ -46,7 +45,6 @@ function startApp() {
                 case 'View all employees':
                     viewEmployees();
                     break;
-                // Add other cases for different actions
             }
         });
 }
@@ -81,6 +79,22 @@ function viewEmployees() {
     });
 }
 
-// Add other functions for different actions as needed
-
-// Remember to handle user input, execute SQL queries, and close the connection appropriately
+// Function to add a department
+function addDepartment() {
+    inquirer.prompt({
+        type: 'input',
+        name: 'name',
+        message: 'What is the name of the department?',
+    })
+    .then((answer) => {
+        connection.query('INSERT INTO department SET ?', answer, (err, results) => {
+            if (err) {
+                console.error(err); // Log the error to the console
+                throw err; // Throw the error to stop the execution
+            }
+            console.log('Department added successfully!');
+            // Call startApp again to prompt the user for the next action
+            startApp();
+        });
+    });
+}
