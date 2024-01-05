@@ -32,4 +32,4 @@ GitHub: https://github.com/mustapha103
 
 ## Video Link
 
-https://kenny-cummings-note-taker.onrender.com
+https://watch.screencastify.com/v/ROqj6Ivpa4l0pClh8OAd
