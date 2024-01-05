@@ -61,7 +61,17 @@ function viewDepartments() {
 
 // Function to view all roles
 function viewRoles() {
-    connection.query('SELECT * FROM roles', (err, results) => {
+    const query = `
+        SELECT 
+            r.id AS role_id,
+            r.title AS job_title,
+            r.salary,
+            d.name AS department
+        FROM roles r
+        INNER JOIN department d ON r.department_id = d.id
+    `;
+
+    connection.query(query, (err, results) => {
         if (err) throw err;
         console.table(results);
         // Call startApp again to prompt the user for the next action
@@ -71,7 +81,22 @@ function viewRoles() {
 
 // Function to view all employees
 function viewEmployees() {
-    connection.query('SELECT * FROM employees', (err, results) => {
+    const query = `
+        SELECT 
+            e.id AS employee_id,
+            e.first_name,
+            e.last_name,
+            r.title AS job_title,
+            d.name AS department,
+            r.salary,
+            CONCAT(m.first_name, ' ', m.last_name) AS manager
+        FROM employees e
+        INNER JOIN roles r ON e.role_id = r.id
+        INNER JOIN department d ON r.department_id = d.id
+        LEFT JOIN employees m ON e.manager_id = m.id
+    `;
+
+    connection.query(query, (err, results) => {
         if (err) throw err;
         console.table(results);
         // Call startApp again to prompt the user for the next action
