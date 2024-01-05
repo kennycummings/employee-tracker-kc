@@ -1,4 +1,4 @@
-# employee-tracker-kc
+# Employee Tracker
 
 ## Purpose
 
