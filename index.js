@@ -31,7 +31,6 @@ function startApp() {
                 'Add a role',
                 'Add an employee',
                 'Update an employee role',
-                // Add other choices based on the bonus requirements
             ],
         })
         .then((answer) => {
