@@ -98,3 +98,50 @@ function addDepartment() {
         });
     });
 }
+
+// Function to add a role
+function addRole() {
+    inquirer.prompt({
+        type: 'input',
+        name: 'name',
+        message: 'What is the name of the employee?',
+    })
+    .then((answer) => {
+        connection.query('INSERT INTO role SET ?', answer, (err, results) => {
+            if (err) {
+                console.error(err); // Log the error to the console
+                throw err; // Throw the error to stop the execution
+            }
+            console.log('Role added successfully!');
+            // Call startApp again to prompt the user for the next action
+            startApp();
+        });
+    });
+}
+
+// Function to add an employee
+function addEmployee() {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'first_name',
+            message: 'What is the first name of the employee?',
+        },
+        {
+            type: 'input',
+            name: 'last_name',
+            message: 'What is the last name of the employee?',
+        },
+    ])
+    .then((answer) => {
+        connection.query('INSERT INTO employees SET ?', answer, (err, results) => {
+            if (err) {
+                console.error(err); // Log the error to the console
+                throw err; // Throw the error to stop the execution
+            }
+            console.log('Employee added successfully!');
+            // Call startApp again to prompt the user for the next action
+            startApp();
+        });
+    });
+}

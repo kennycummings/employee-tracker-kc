@@ -30,6 +30,6 @@ GitHub: https://github.com/jabrams513
 Mustapha Kromah
 GitHub: https://github.com/mustapha103
 
-## Deployment Link
+## Video Link
 
 https://kenny-cummings-note-taker.onrender.com

@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "inquirer": "^8.2.6",
+    "mysql2": "^3.6.5"
+  },
+  "name": "employee-tracker-kc",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

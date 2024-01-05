@@ -3,11 +3,13 @@ CREATE DATABASE employeetracker_db;
 
 USE employeetracker_db;
 
+-- Create department table
 CREATE TABLE department (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR (30) NOT NULL
 );
 
+-- Create roles table
 CREATE TABLE roles (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR (30) NOT NULL,
@@ -17,6 +19,7 @@ CREATE TABLE roles (
     REFERENCES department (id)
 );
 
+-- Create employees table
 CREATE TABLE employees (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
