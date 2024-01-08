@@ -31,6 +31,7 @@ function startApp() {
                 'Add a role',
                 'Add an employee',
                 'Update an employee role',
+                'Exit'
             ],
         })
         .then((answer) => {
@@ -44,6 +45,24 @@ function startApp() {
                 case 'View all employees':
                     viewEmployees();
                     break;
+                case 'Add a department':
+                    addDepartment();
+                    break;
+                case 'Add a role':
+                    addRole();
+                    break;
+                case 'Add an employee':
+                    addEmployee();
+                    break;
+                case 'Update an employee role':
+                    // Add a function to handle updating an employee role
+                    break;
+                case 'Exit':
+                    connection.end(); // Close the connection when exiting the application
+                    break;
+                default:
+                    console.log('Invalid action. Please try again.');
+                    startApp();
             }
         });
 }
@@ -110,62 +129,70 @@ function addDepartment() {
         name: 'name',
         message: 'What is the name of the department?',
     })
-    .then((answer) => {
-        connection.query('INSERT INTO department SET ?', answer, (err, results) => {
-            if (err) {
-                console.error(err); // Log the error to the console
-                throw err; // Throw the error to stop the execution
-            }
-            console.log('Department added successfully!');
-            // Call startApp again to prompt the user for the next action
-            startApp();
+        .then((answer) => {
+            connection.query('INSERT INTO department SET ?', answer, (err, results) => {
+                if (err) {
+                    console.error(err); // Log the error to the console
+                    throw err; // Throw the error to stop the execution
+                }
+                console.log('Department added successfully!');
+                // Call startApp again to prompt the user for the next action
+                startApp();
+            });
         });
-    });
 }
 
 // Function to add a role
 function addRole() {
     inquirer.prompt({
         type: 'input',
-        name: 'name',
-        message: 'What is the name of the employee?',
+        name: 'title',
+        message: 'What is the title of the role?',
     })
-    .then((answer) => {
-        connection.query('INSERT INTO role SET ?', answer, (err, results) => {
-            if (err) {
-                console.error(err); // Log the error to the console
-                throw err; // Throw the error to stop the execution
-            }
-            console.log('Role added successfully!');
-            // Call startApp again to prompt the user for the next action
-            startApp();
+        .then((answer) => {
+            connection.query('INSERT INTO roles SET ?', answer, (err, results) => {
+                if (err) {
+                    console.error(err); // Log the error to the console
+                    throw err; // Throw the error to stop the execution
+                }
+                console.log('Role added successfully!');
+                // Call startApp again to prompt the user for the next action
+                startApp();
+            });
         });
-    });
 }
 
 // Function to add an employee
 function addEmployee() {
-    inquirer.prompt([
-        {
-            type: 'input',
-            name: 'first_name',
-            message: 'What is the first name of the employee?',
-        },
-        {
-            type: 'input',
-            name: 'last_name',
-            message: 'What is the last name of the employee?',
-        },
-    ])
-    .then((answer) => {
-        connection.query('INSERT INTO employees SET ?', answer, (err, results) => {
-            if (err) {
-                console.error(err); // Log the error to the console
-                throw err; // Throw the error to stop the execution
-            }
-            console.log('Employee added successfully!');
-            // Call startApp again to prompt the user for the next action
-            startApp();
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'first_name',
+                message: "Enter the employee's first name:",
+            },
+            {
+                type: 'input',
+                name: 'last_name',
+                message: "Enter the employee's last name:",
+            },
+            {
+                type: 'number',
+                name: 'role_id',
+                message: "Enter the employee's role ID:",
+            },
+            {
+                type: 'number',
+                name: 'manager_id',
+                message: "Enter the employee's manager ID (if applicable):",
+            },
+        ])
+        .then((answer) => {
+            const query = 'INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)';
+            connection.query(query, [answer.first_name, answer.last_name, answer.role_id, answer.manager_id], (err, results) => {
+                if (err) throw err;
+                console.log('Employee added successfully.');
+                startApp();
+            });
         });
-    });
 }
