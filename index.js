@@ -55,7 +55,7 @@ function startApp() {
                     addEmployee();
                     break;
                 case 'Update an employee role':
-                    // Add a function to handle updating an employee role
+                    updateEmployeeRole();
                     break;
                 case 'Exit':
                     connection.end(); // Close the connection when exiting the application
@@ -192,6 +192,31 @@ function addEmployee() {
             connection.query(query, [answer.first_name, answer.last_name, answer.role_id, answer.manager_id], (err, results) => {
                 if (err) throw err;
                 console.log('Employee added successfully.');
+                startApp();
+            });
+        });
+}
+
+// Function to update an employee role
+function updateEmployeeRole() {
+    inquirer
+        .prompt([
+            {
+                type: 'number',
+                name: 'employee_id',
+                message: "Enter the ID of the employee you want to update:",
+            },
+            {
+                type: 'number',
+                name: 'new_role_id',
+                message: "Enter the new role ID for the employee:",
+            },
+        ])
+        .then((answer) => {
+            const query = 'UPDATE employees SET role_id = ? WHERE id = ?';
+            connection.query(query, [answer.new_role_id, answer.employee_id], (err, results) => {
+                if (err) throw err;
+                console.log('Employee role updated successfully.');
                 startApp();
             });
         });

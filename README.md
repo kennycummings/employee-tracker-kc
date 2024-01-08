@@ -15,7 +15,8 @@ Through node index.js the user is prompted with:
   Add a department 
   Add a role 
   Add an employee 
-  Update an employee role 
+  Update an employee role
+  Exit 
 
 The user is then able to view tables of employee data as well as edit and add values such as department and role.
 
